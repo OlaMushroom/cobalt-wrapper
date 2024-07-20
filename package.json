@@ -1,0 +1,31 @@
+{
+  "name": "cobalt-wrapper",
+  "version": "0.0.1",
+  "description": "A wrapper for cobalt api.",
+  "license": "MIT",
+  "author": "OlaMushroom",
+  "type": "module",
+  "exports": {
+    ".": {
+      "bun": "./index.ts",
+      "import": "./lib/index.js",
+      "default": "./lib/index.js"
+    }
+  },
+  "main": "./lib/index.js",
+  "module": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "files": ["lib"],
+  "scripts": {
+    "build": "bun build.js && tsc --outDir lib"
+  },
+  "dependencies": {
+    "@types/content-disposition": "^0.5.8",
+    "content-disposition": "^0.5.4"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.8.3",
+    "@types/bun": "latest",
+    "typescript": "^5.5.3"
+  }
+}
