@@ -4,6 +4,7 @@ console.log(
     outdir: './lib',
     format: 'esm',
     target: 'node',
-    external: ['contentDisposition', 'safe-buffer']
+    external: ['contentDisposition', 'safe-buffer'],
+    minify: true
   })
 );
