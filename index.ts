@@ -29,7 +29,7 @@ export interface RequestBody {
 interface ResponseBody {
   status: 'error' | 'redirect' | 'stream' | 'success' | 'rate-limit' | 'picker';
   text?: string;
-  url: string;
+  url?: string;
   pickerType?: 'various' | 'images';
   picker?: PickerItem[];
   audio?: string;
@@ -60,15 +60,17 @@ export async function request(req: RequestBody): Promise<ResponseBody> {
 
 export async function download(url: string): Promise<void> {
   try {
-    const data = await fetch(url);
+    const res = await fetch(url);
+    if (!res.ok) throw Error(`HTTP Error: ${res.status} ${res.statusText}`);
     const file = contentDisposition.parse(
-      data.headers.get('Content-Disposition') as string
+      res.headers.get('Content-Disposition') as string
     ).parameters.filename;
-    const path = './downloaded/';
-    mkdirSync(path, { recursive: true });
     console.log(`Writing file...: ${file}`);
-    writeFileSync(`${path}${file}`, new Uint8Array(await data.arrayBuffer()));
-    console.log(`File written successfully: ${path}${file}`);
+    const dir = './downloaded/';
+    mkdirSync(dir, { recursive: true });
+    const path = dir + file;
+    writeFileSync(path, new Uint8Array(await res.arrayBuffer()));
+    console.log(`File written successfully: ${path}`);
   } catch (e) {
     throw Error('Error: ', { cause: e });
   }
