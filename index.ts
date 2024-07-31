@@ -1,7 +1,6 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import contentDisposition from 'content-disposition';
-
-export interface RequestBody {
+export async function request(req: {
   url: string | null;
   vCodec?: 'h264' | 'av1' | 'vp9';
   vQuality?:
@@ -24,24 +23,18 @@ export interface RequestBody {
   disableMetadata?: boolean;
   twitterGif?: boolean;
   tiktokH265?: boolean;
-}
-
-interface ResponseBody {
+}): Promise<{
   status: 'error' | 'redirect' | 'stream' | 'success' | 'rate-limit' | 'picker';
   text?: string;
   url?: string;
   pickerType?: 'various' | 'images';
-  picker?: PickerItem[];
+  picker?: {
+    type?: 'video' | 'photo' | 'gif';
+    url: string;
+    thumb?: string;
+  }[];
   audio?: string;
-}
-
-interface PickerItem {
-  type?: 'video';
-  url: string;
-  thumb?: string;
-}
-
-export async function request(req: RequestBody): Promise<ResponseBody> {
+}> {
   try {
     const res = await fetch('https://api.cobalt.tools/api/json', {
       method: 'POST',
@@ -57,7 +50,6 @@ export async function request(req: RequestBody): Promise<ResponseBody> {
     throw Error('Error: ', { cause: e });
   }
 }
-
 export async function download(url: string): Promise<void> {
   try {
     const res = await fetch(url);

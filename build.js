@@ -1,10 +1,8 @@
-console.log(
-  await Bun.build({
-    entrypoints: ['./index.ts'],
-    outdir: './lib',
-    format: 'esm',
-    target: 'node',
-    external: ['contentDisposition', 'safe-buffer'],
-    minify: true
-  })
-);
+await Bun.build({
+  entrypoints: ['./index.ts'],
+  outdir: './lib',
+  packages: 'external',
+  target: 'node',
+  format: 'esm',
+  minify: true
+});

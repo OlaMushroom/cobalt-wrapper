@@ -1,4 +1,4 @@
-export interface RequestBody {
+export declare function request(req: {
     url: string | null;
     vCodec?: 'h264' | 'av1' | 'vp9';
     vQuality?: '144' | '240' | '360' | '480' | '720' | '1080' | '1440' | '2160' | 'max' | string;
@@ -11,20 +11,16 @@ export interface RequestBody {
     disableMetadata?: boolean;
     twitterGif?: boolean;
     tiktokH265?: boolean;
-}
-interface ResponseBody {
+}): Promise<{
     status: 'error' | 'redirect' | 'stream' | 'success' | 'rate-limit' | 'picker';
     text?: string;
-    url: string;
+    url?: string;
     pickerType?: 'various' | 'images';
-    picker?: PickerItem[];
+    picker?: {
+        type?: 'video' | 'photo' | 'gif';
+        url: string;
+        thumb?: string;
+    }[];
     audio?: string;
-}
-interface PickerItem {
-    type?: 'video';
-    url: string;
-    thumb?: string;
-}
-export declare function request(req: RequestBody): Promise<ResponseBody>;
+}>;
 export declare function download(url: string): Promise<void>;
-export {};
