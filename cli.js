@@ -3,6 +3,7 @@ import { existsSync, mkdirSync, rmSync, writeFileSync } from 'node:fs'
 import { cac } from 'cac'
 import contentDisposition from 'content-disposition'
 import sendRequest from './lib/index.js'
+const dir = './downloaded/'
 const cli = cac('cobalt')
 cli.help()
 cli.option('-c, --clean', 'Clean the cache directory')
@@ -25,7 +26,6 @@ async function download(url) {
       res.headers.get('Content-Disposition')
     ).parameters.filename
     console.log(`Writing file...: ${file}`)
-    const dir = './downloaded/'
     mkdirSync(dir, { recursive: true })
     const path = dir + file
     writeFileSync(path, new Uint8Array(await res.arrayBuffer()))
@@ -46,6 +46,6 @@ cli
 cli.parse()
 const opts = cli.options
 if (opts.clean) {
-  if (removeDir('./downloaded')) console.log('Cleaned cache successfully.')
+  if (removeDir(dir)) console.log('Cleaned cache successfully.')
   else console.log('No cache directory is found.')
 }
