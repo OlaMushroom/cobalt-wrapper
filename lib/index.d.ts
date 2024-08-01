@@ -1,4 +1,4 @@
-export declare function request(req: {
+export default function request(req: {
     url: string | null;
     vCodec?: 'h264' | 'av1' | 'vp9';
     vQuality?: '144' | '240' | '360' | '480' | '720' | '1080' | '1440' | '2160' | 'max' | string;
@@ -23,4 +23,3 @@ export declare function request(req: {
     }[];
     audio?: string;
 }>;
-export declare function download(url: string): Promise<void>;

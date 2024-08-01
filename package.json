@@ -15,6 +15,9 @@
   "main": "./lib/index.js",
   "module": "./lib/index.js",
   "types": "./lib/index.d.ts",
+  "bin": {
+    "cobalt": "cli.js"
+  },
   "files": [
     "index.ts",
     "lib"
@@ -23,8 +26,8 @@
     "build": "bun build.js && tsc --outDir lib"
   },
   "dependencies": {
-    "content-disposition": "^0.5.4",
-    "@types/content-disposition": "^0.5.8"
+    "cac": "^6.7.14",
+    "content-disposition": "^0.5.4"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
