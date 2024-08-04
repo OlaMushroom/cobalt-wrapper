@@ -1,5 +1,8 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.8.1/schema.json",
+  "files": {
+    "include": ["index.ts", "lib"]
+  },
   "linter": {
     "rules": {
       "correctness": {
@@ -9,6 +12,7 @@
     }
   },
   "formatter": {
+    "include": ["index.ts"],
     "indentStyle": "space"
   },
   "javascript": {
