@@ -19,6 +19,7 @@
     "cobalt": "cli.js"
   },
   "files": [
+    "cli.js",
     "index.ts",
     "lib"
   ],
@@ -27,8 +28,7 @@
     "check": "biome check --write"
   },
   "dependencies": {
-    "cac": "^6.7.14",
-    "content-disposition": "^0.5.4"
+    "cac": "^6.7.14"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",

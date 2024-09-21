@@ -7,7 +7,6 @@ async function request(options?: object) {
     throw Error('Error: ', { cause: e })
   }
 }
-
 export const info = async (): Promise<{
   cobalt: {
     version: string
@@ -22,7 +21,6 @@ export const info = async (): Promise<{
     remote: string
   }
 }> => await request()
-
 export default async function cobalt(req: {
   url: string
   videoQuality?:

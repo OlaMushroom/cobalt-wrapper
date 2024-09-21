@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 import { existsSync, mkdirSync, rmSync, writeFileSync } from 'node:fs'
 import { cac } from 'cac'
-import contentDisposition from 'content-disposition'
 import cobalt from './lib/index.js'
 const dir = './downloaded/'
 const cli = cac('cobalt')
@@ -16,11 +15,10 @@ cli
     console.log(data)
     if (options.download) {
       try {
+        console.log('Downloading...')
         const res = await fetch(data.url)
         if (!res.ok) throw Error(`HTTP Error: ${res.status} ${res.statusText}`)
-        const file = contentDisposition.parse(
-          res.headers.get('Content-Disposition')
-        ).parameters.filename
+        const file = data.filename
         console.log(`Writing file...: ${file}`)
         mkdirSync(dir, { recursive: true })
         const path = dir + file
