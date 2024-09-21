@@ -1,4 +1,29 @@
-export default async function request(req: {
+async function request(options?: object) {
+  try {
+    const res = await fetch('https://api.cobalt.tools', options)
+    if (!res.ok) throw Error(`HTTP Error: ${res.status} ${res.statusText}`)
+    return await res.json()
+  } catch (e) {
+    throw Error('Error: ', { cause: e })
+  }
+}
+
+export const info = async (): Promise<{
+  cobalt: {
+    version: string
+    url: string
+    startTime: string
+    durationLimit: number
+    services: string[]
+  }
+  git: {
+    commit: string
+    branch: string
+    remote: string
+  }
+}> => await request()
+
+export default async function cobalt(req: {
   url: string
   videoQuality?:
     | '144'
@@ -26,15 +51,15 @@ export default async function request(req: {
   twitterGif?: boolean
 }): Promise<{
   status: 'error' | 'picker' | 'redirect' | 'tunnel'
-  url: string
-  filename: string
+  url?: string
+  filename?: string
   audio?: string
   audioFilename?: string
   picker?: {
     type: 'photo' | 'video' | 'gif'
     url: string
     thumb?: string
-  }
+  }[]
   error?: {
     code: string
     context?: {
@@ -43,33 +68,12 @@ export default async function request(req: {
     }
   }
 }> {
-  try {
-    const res = await fetch('https://api.cobalt.tools', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(req)
-    })
-    if (!res.ok) throw Error(`HTTP Error: ${res.status} ${res.statusText}`)
-    return await res.json()
-  } catch (e) {
-    throw Error('Error: ', { cause: e })
-  }
+  return await request({
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(req)
+  })
 }
-
-export async function info(req: {
-  cobalt: {
-    version: string
-    url: string
-    startTime: string
-    durationLimit: number
-    services: string[]
-  }
-  git: {
-    commit: string
-    branch: string
-    remote: string
-  }
-}) {}

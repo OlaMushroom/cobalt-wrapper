@@ -1,4 +1,18 @@
-export default function request(req: {
+export declare const info: () => Promise<{
+    cobalt: {
+        version: string;
+        url: string;
+        startTime: string;
+        durationLimit: number;
+        services: string[];
+    };
+    git: {
+        commit: string;
+        branch: string;
+        remote: string;
+    };
+}>;
+export default function cobalt(req: {
     url: string;
     videoQuality?: '144' | '240' | '360' | '480' | '720' | '1080' | '1440' | '2160' | '4320' | 'max' | string;
     audioFormat?: 'best' | 'mp3' | 'ogg' | 'opus' | 'wav';
@@ -15,15 +29,15 @@ export default function request(req: {
     twitterGif?: boolean;
 }): Promise<{
     status: 'error' | 'picker' | 'redirect' | 'tunnel';
-    url: string;
-    filename: string;
+    url?: string;
+    filename?: string;
     audio?: string;
     audioFilename?: string;
     picker?: {
         type: 'photo' | 'video' | 'gif';
         url: string;
         thumb?: string;
-    };
+    }[];
     error?: {
         code: string;
         context?: {
@@ -32,17 +46,3 @@ export default function request(req: {
         };
     };
 }>;
-export declare function info(req: {
-    cobalt: {
-        version: string;
-        url: string;
-        startTime: string;
-        durationLimit: number;
-        services: string[];
-    };
-    git: {
-        commit: string;
-        branch: string;
-        remote: string;
-    };
-}): Promise<void>;
