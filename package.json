@@ -1,9 +1,9 @@
 {
   "name": "cobalt-wrapper",
   "version": "0.0.1",
-  "description": "A wrapper for cobalt api.",
+  "description": "A wrapper for cobalt api",
   "license": "MIT",
-  "author": "OlaMushroom",
+  "author": "Ola Mushroom",
   "type": "module",
   "exports": {
     ".": {
